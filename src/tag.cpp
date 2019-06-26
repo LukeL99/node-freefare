@@ -72,7 +72,7 @@ NAN_METHOD(Tag::New) {
 	}
 }
 
-v8::Handle<v8::Value> Tag::Instantiate(MifareTag constructorTag) {
+v8::Local<v8::Value> Tag::Instantiate(MifareTag constructorTag) {
 	Nan::EscapableHandleScope scope;
 
 	Tag::constructorTag = constructorTag;
