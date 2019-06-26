@@ -28,7 +28,7 @@ Nan::Persistent<v8::Function> & Device::constructor() {
 
 NAN_METHOD(Device::New) {
 	if (info.IsConstructCall()) {
-		std::string connstring = std::string(*v8::String::Utf8Value(info[0]->ToString(Nan::GetCurrentContext()).FromMaybe(v8::Local<v8::String>())));
+		std::string connstring = std::string(*v8::String::Utf8Value(info[0]);
 		Device *obj = new Device(connstring);
 		obj->Wrap(info.This());
 		info.GetReturnValue().Set(info.This());
