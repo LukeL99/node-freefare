@@ -117,9 +117,9 @@ NAN_METHOD(Tag::mifareClassic_authenticate) {
 	AsyncQueueWorker(new mifareClassic_authenticateWorker(
 		new Callback(info[3].As<v8::Function>()),
 		obj->tag,
-		info[0]->Uint32Value(),
+		Nan::To<uint32_t>(info[0]).FromMaybe(0),
 		reinterpret_cast<unsigned char*>(node::Buffer::Data(info[1])),
-		(std::string(*v8::String::Utf8Value(info[2]->ToString())) == "A") ? MFC_KEY_A : MFC_KEY_B
+		(std::string(*Nan::Utf8String(info[2])) == "A") ? MFC_KEY_A : MFC_KEY_B
 	));
 }
 
@@ -163,7 +163,7 @@ private:
 NAN_METHOD(Tag::mifareClassic_read) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[1].As<v8::Function>());
-	AsyncQueueWorker(new mifareClassic_readWorker(callback, obj->tag, info[0]->Uint32Value()));
+	AsyncQueueWorker(new mifareClassic_readWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0)));
 }
 
 
@@ -203,7 +203,7 @@ private:
 NAN_METHOD(Tag::mifareClassic_initValue) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[3].As<v8::Function>());
-	AsyncQueueWorker(new mifareClassic_initValueWorker(callback, obj->tag, info[0]->Uint32Value(), info[1]->Int32Value(), info[2]->Uint32Value()));
+	AsyncQueueWorker(new mifareClassic_initValueWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0), Nan::To<uint32_t>(info[1]).FromMaybe(0), Nan::To<uint32_t>(info[2]).FromMaybe(0)));
 }
 
 
@@ -245,7 +245,7 @@ private:
 NAN_METHOD(Tag::mifareClassic_readValue) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[1].As<v8::Function>());
-	AsyncQueueWorker(new mifareClassic_readValueWorker(callback, obj->tag, info[0]->Uint32Value()));
+	AsyncQueueWorker(new mifareClassic_readValueWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0)));
 }
 
 
@@ -287,7 +287,7 @@ private:
 NAN_METHOD(Tag::mifareClassic_write) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[2].As<v8::Function>());
-	AsyncQueueWorker(new mifareClassic_writeWorker(callback, obj->tag, info[0]->Uint32Value(), reinterpret_cast<unsigned char*>(node::Buffer::Data(info[1]))));
+	AsyncQueueWorker(new mifareClassic_writeWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0), reinterpret_cast<unsigned char*>(node::Buffer::Data(info[1]))));
 }
 
 
@@ -326,7 +326,7 @@ private:
 NAN_METHOD(Tag::mifareClassic_increment) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[2].As<v8::Function>());
-	AsyncQueueWorker(new mifareClassic_incrementWorker(callback, obj->tag, info[0]->Uint32Value(), info[1]->Uint32Value()));
+	AsyncQueueWorker(new mifareClassic_incrementWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0), Nan::To<uint32_t>(info[1]).FromMaybe(0)));
 }
 
 
@@ -366,7 +366,7 @@ private:
 NAN_METHOD(Tag::mifareClassic_decrement) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[2].As<v8::Function>());
-	AsyncQueueWorker(new mifareClassic_decrementWorker(callback, obj->tag, info[0]->Uint32Value(), info[1]->Uint32Value()));
+	AsyncQueueWorker(new mifareClassic_decrementWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0), Nan::To<uint32_t>(info[1]).FromMaybe(0)));
 }
 
 
@@ -404,7 +404,7 @@ private:
 NAN_METHOD(Tag::mifareClassic_restore) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[1].As<v8::Function>());
-	AsyncQueueWorker(new mifareClassic_restoreWorker(callback, obj->tag, info[0]->Uint32Value()));
+	AsyncQueueWorker(new mifareClassic_restoreWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0)));
 }
 
 
@@ -442,5 +442,5 @@ private:
 NAN_METHOD(Tag::mifareClassic_transfer) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[1].As<v8::Function>());
-	AsyncQueueWorker(new mifareClassic_transferWorker(callback, obj->tag, info[0]->Uint32Value()));
+	AsyncQueueWorker(new mifareClassic_transferWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0)));
 }

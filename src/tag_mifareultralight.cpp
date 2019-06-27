@@ -113,7 +113,7 @@ private:
 NAN_METHOD(Tag::mifareUltralight_read) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[1].As<v8::Function>());
-	AsyncQueueWorker(new mifareUltralight_readWorker(callback, obj->tag, info[0]->Uint32Value()));
+	AsyncQueueWorker(new mifareUltralight_readWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0)));
 }
 
 
@@ -156,5 +156,5 @@ private:
 NAN_METHOD(Tag::mifareUltralight_write) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[2].As<v8::Function>());
-	AsyncQueueWorker(new mifareUltralight_writeWorker(callback, obj->tag, info[0]->Uint32Value(), reinterpret_cast<unsigned char*>(node::Buffer::Data(info[1]))));
+	AsyncQueueWorker(new mifareUltralight_writeWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0), reinterpret_cast<unsigned char*>(node::Buffer::Data(info[1]))));
 }

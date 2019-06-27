@@ -113,7 +113,7 @@ NAN_METHOD(Tag::mifareDesfire_authenticate_des) {
 	AsyncQueueWorker(new mifareDesfire_authenticateWorker(
 		new Callback(info[2].As<v8::Function>()),
 		obj->tag,
-		info[0]->Uint32Value(),
+		Nan::To<uint32_t>(info[0]).FromMaybe(0),
 		key
 	));
 
@@ -127,7 +127,7 @@ NAN_METHOD(Tag::mifareDesfire_authenticate_3des) {
 	AsyncQueueWorker(new mifareDesfire_authenticateWorker(
 		new Callback(info[2].As<v8::Function>()),
 		obj->tag,
-		info[0]->Uint32Value(),
+		Nan::To<uint32_t>(info[0]).FromMaybe(0),
 		key
 	));
 
@@ -315,7 +315,7 @@ private:
 NAN_METHOD(Tag::mifareDesfire_read) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[3].As<v8::Function>());
-	AsyncQueueWorker(new mifareDesfire_readWorker(callback, obj->tag, info[0]->Uint32Value(), info[1]->Uint32Value(), info[2]->Uint32Value()));
+	AsyncQueueWorker(new mifareDesfire_readWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0), Nan::To<uint32_t>(info[1]).FromMaybe(0), Nan::To<uint32_t>(info[2]).FromMaybe(0)));
 }
 
 
@@ -364,5 +364,5 @@ private:
 NAN_METHOD(Tag::mifareDesfire_write) {
 	Tag* obj = ObjectWrap::Unwrap<Tag>(info.This());
 	Callback *callback = new Callback(info[4].As<v8::Function>());
-	AsyncQueueWorker(new mifareDesfire_writeWorker(callback, obj->tag, info[0]->Uint32Value(), info[1]->Uint32Value(), info[2]->Uint32Value(), reinterpret_cast<unsigned char*>(node::Buffer::Data(info[3]))));
+	AsyncQueueWorker(new mifareDesfire_writeWorker(callback, obj->tag, Nan::To<uint32_t>(info[0]).FromMaybe(0), Nan::To<uint32_t>(info[1]).FromMaybe(0), Nan::To<uint32_t>(info[2]).FromMaybe(0), reinterpret_cast<unsigned char*>(node::Buffer::Data(info[3]))));
 }
